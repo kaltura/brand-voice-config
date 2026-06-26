@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO="kaltura/brand-voice-config"
+SKILL_NAME="kaltura-brand-voice"
+BRAND_GUIDELINES_DEST="$HOME/.claude/brand-guidelines.md"
+SKILL_DEST="$HOME/.claude/skills/${SKILL_NAME}.md"
+
+echo "==> Kaltura brand-voice installer"
+echo
+
+# 1. Check dependencies
+if ! command -v node &>/dev/null; then
+  echo "ERROR: Node.js is required. Install from https://nodejs.org (v18+)."
+  exit 1
+fi
+NODE_VERSION=$(node -e "process.stdout.write(process.versions.node)")
+NODE_MAJOR="${NODE_VERSION%%.*}"
+if [ "$NODE_MAJOR" -lt 18 ]; then
+  echo "ERROR: Node.js 18+ is required (found $NODE_VERSION)."
+  exit 1
+fi
+if ! command -v gh &>/dev/null; then
+  echo "ERROR: GitHub CLI (gh) is required. Install from https://cli.github.com."
+  exit 1
+fi
+
+# 2. Verify gh auth
+if ! gh auth status &>/dev/null; then
+  echo "You need to authenticate with GitHub first."
+  echo "Run: gh auth login"
+  exit 1
+fi
+
+# 3. Install brand-voice
+echo "==> Installing brand-voice..."
+npm install -g brand-voice
+echo "    brand-voice installed."
+echo
+
+# 4. Download Kaltura brand guidelines → global scope
+echo "==> Downloading Kaltura brand guidelines..."
+mkdir -p "$(dirname "$BRAND_GUIDELINES_DEST")"
+gh api "repos/${REPO}/contents/brand-guidelines.md" --jq '.content' \
+  | base64 --decode > "$BRAND_GUIDELINES_DEST"
+echo "    Written to $BRAND_GUIDELINES_DEST"
+echo
+
+# 5. Install the Kaltura Claude skill
+echo "==> Installing /kaltura-brand-voice skill..."
+mkdir -p "$(dirname "$SKILL_DEST")"
+gh api "repos/${REPO}/contents/skills/kaltura-brand-voice.md" --jq '.content' \
+  | base64 --decode > "$SKILL_DEST"
+echo "    Written to $SKILL_DEST"
+echo
+
+# 6. Register hook + MCP (brand-voice setup handles this idempotently)
+echo "==> Registering PostToolUse hook and MCP server..."
+brand-voice setup
+echo
+
+echo "==> Done! Kaltura brand-voice is active."
+echo
+echo "    In any Claude Code session:"
+echo "      /kaltura-brand-voice       — show brand cheat-sheet & commands"
+echo "      /kaltura-brand-voice update — refresh guidelines from GitHub"
+echo
+echo "    Every .md/.mdx file Claude writes is now checked automatically."
