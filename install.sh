@@ -2,6 +2,7 @@
 set -euo pipefail
 
 REPO="kaltura/brand-voice-config"
+RAW="https://raw.githubusercontent.com/${REPO}/main"
 SKILL_NAME="kaltura-brand-voice"
 BRAND_GUIDELINES_DEST="$HOME/.claude/brand-guidelines.md"
 SKILL_DEST="$HOME/.claude/skills/${SKILL_NAME}.md"
@@ -20,41 +21,28 @@ if [ "$NODE_MAJOR" -lt 18 ]; then
   echo "ERROR: Node.js 18+ is required (found $NODE_VERSION)."
   exit 1
 fi
-if ! command -v gh &>/dev/null; then
-  echo "ERROR: GitHub CLI (gh) is required. Install from https://cli.github.com."
-  exit 1
-fi
 
-# 2. Verify gh auth
-if ! gh auth status &>/dev/null; then
-  echo "You need to authenticate with GitHub first."
-  echo "Run: gh auth login"
-  exit 1
-fi
-
-# 3. Install brand-voice
+# 2. Install brand-voice
 echo "==> Installing brand-voice..."
 npm install -g brand-voice
 echo "    brand-voice installed."
 echo
 
-# 4. Download Kaltura brand guidelines → global scope
+# 3. Download Kaltura brand guidelines → global scope
 echo "==> Downloading Kaltura brand guidelines..."
 mkdir -p "$(dirname "$BRAND_GUIDELINES_DEST")"
-gh api "repos/${REPO}/contents/brand-guidelines.md" --jq '.content' \
-  | base64 --decode > "$BRAND_GUIDELINES_DEST"
+curl -fsSL "${RAW}/brand-guidelines.md" -o "$BRAND_GUIDELINES_DEST"
 echo "    Written to $BRAND_GUIDELINES_DEST"
 echo
 
-# 5. Install the Kaltura Claude skill
+# 4. Install the Kaltura Claude skill
 echo "==> Installing /kaltura-brand-voice skill..."
 mkdir -p "$(dirname "$SKILL_DEST")"
-gh api "repos/${REPO}/contents/skills/kaltura-brand-voice.md" --jq '.content' \
-  | base64 --decode > "$SKILL_DEST"
+curl -fsSL "${RAW}/skills/kaltura-brand-voice.md" -o "$SKILL_DEST"
 echo "    Written to $SKILL_DEST"
 echo
 
-# 6. Register hook + MCP (brand-voice setup handles this idempotently)
+# 5. Register hook + MCP (brand-voice setup handles this idempotently)
 echo "==> Registering PostToolUse hook and MCP server..."
 brand-voice setup
 echo

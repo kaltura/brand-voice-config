@@ -51,16 +51,16 @@ Commands:
 
 ### `update`
 
-Re-download the brand guidelines from the private GitHub repo. Run this bash command:
+Re-download the brand guidelines from GitHub. Run this bash command:
 
 ```bash
-gh api "repos/kaltura/brand-voice-config/contents/brand-guidelines.md" --jq '.content' \
-  | base64 --decode > "$HOME/.claude/brand-guidelines.md"
+curl -fsSL https://raw.githubusercontent.com/kaltura/brand-voice-config/main/brand-guidelines.md \
+  -o "$HOME/.claude/brand-guidelines.md"
 ```
 
 Then confirm: "Kaltura brand guidelines updated at ~/.claude/brand-guidelines.md"
 
-If the command fails (e.g. auth issue), tell the user: "Make sure you're authenticated: run `gh auth login` and try again."
+If the command fails, tell the user to check their network connection and try again.
 
 ### `check [file]`
 

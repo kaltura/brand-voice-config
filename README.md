@@ -15,7 +15,6 @@ After install, every time Claude writes or edits a Markdown file it checks for K
 
 You need:
 - **Node.js 18+**
-- **GitHub CLI** (`gh`) authenticated with your Kaltura GitHub account (`gh auth login`)
 
 Then run:
 
