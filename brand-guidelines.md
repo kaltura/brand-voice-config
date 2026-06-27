@@ -4,7 +4,7 @@
 
 **Brand name:** Kaltura (always capitalize; never "kaltura" or "KALTURA")
 
-**Mission:** Powering agentic, AI-driven digital experiences.
+**Mission:** Powering rich, agentic digital experiences.
 
 **Core values:** Open · Flexible · Collaborative
 
