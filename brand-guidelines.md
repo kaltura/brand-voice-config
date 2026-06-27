@@ -27,9 +27,7 @@
 
 **Always use:** Kaltura, Agentic DX Platform, Content Hubs, Rich Media CMS, LMS Extensions, Kaltura Room, Agentic Avatars, Genies, Content Lab, Live Studio, Interactive Video Paths, Agentic Workflows, Conversational Agents, Kaltura Events & Webinars, Kaltura Player, Virtual Classroom, CMS Extensions, Avatar Videos, Avatar Video Studio, Video-to-Live Agents, Kaltura Video Editor, Express Capture, Personal Capture
 
-**Avoid:** leverage, utilize, synergy, seamless, cutting-edge, robust, innovative, game-changing, simply, easy, users, chatbots, KMS, KAF, KMC, KME, EP, Newrow, Mediaspace, KEA, IVP, PATH, RAPT, Kwebcast
-
-**Forbidden:** "AI Content Lab", "Video Portal", "Events Platform", "Management Console", "KAF", "KME", "Newrow", "NR2", "Kaltura Meeting Experience", "NG Room", "New-Gen Room"
+**Avoid:** leverage, utilize, synergy, seamless, cutting-edge, robust, innovative, game-changing, simply, easy, users, chatbots, KMS, KAF, KMC, KME, EP, Newrow, Mediaspace, KEA, IVP, PATH, RAPT, Kwebcast, "AI Content Lab", "Video Portal", "Events Platform", "Management Console", "KAF", "KME", "Newrow", "NR2", "Kaltura Meeting Experience", "NG Room", "New-Gen Room"
 
 
 ## Visual Identity
