@@ -23,6 +23,9 @@ Voice:    Energy · Clarity · Warmth
 Person:   Second ("you", never "users")
 Voice:    Active · Short sentences (max 25 words)
 Tone:     Confident, not breathless · Empathetic, not corporate
+Format:   Write prose as continuous paragraphs — never hard-wrap mid-sentence.
+          Let the renderer word-wrap. For an intentional line break, end the
+          line with two trailing spaces.
 
 ✓ Always use:
   Kaltura · Content Hubs · LMS Extensions · Rich Media CMS
